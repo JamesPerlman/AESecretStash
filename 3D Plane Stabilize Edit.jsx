@@ -144,18 +144,20 @@ function linkTransformExpressions(destLayer, sourceLayer) {
     projectorLight.moveAfter(projectorNull);
     projectionPlate.moveAfter(projectorLight);
     projectionScreen.moveToEnd();
-    
+
     // Precomp stableComp
     var stableCompPrecomp = newCompFromComp(stableComp, comp.name + " - 3D Projected Precomp");
-    stableCompPrecomp.width = comp.width;
-    stableCompPrecomp.height = comp.height;
-    var stableCompLayer = stableCompPrecomp.layer(1);
+
+    var reprojectedComp = newCompFromComp(stableCompPrecomp, comp.name + " - Reconstructed");
+    reprojectedComp.width = comp.width;
+    reprojectedComp.height = comp.height;
+    var stableCompLayer = reprojectedComp.layer(1);
     stableCompLayer.threeDLayer = true;
-    comp.activeCamera.copyToComp(stableCompPrecomp);
+    comp.activeCamera.copyToComp(reprojectedComp);
     linkTransformExpressions(stableCompLayer, refSolidLayer);
     // Add original stabilizeLayer as background
-    stabilizeLayer.copyToComp(stableCompPrecomp);
-    stableCompLayer.moveAfter(stableCompPrecomp.activeCamera);
+    stabilizeLayer.copyToComp(reprojectedComp);
+    stableCompLayer.moveAfter(reprojectedComp.activeCamera);
 
     
 })();
