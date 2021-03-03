@@ -2,7 +2,7 @@
 (function main() {
     var STR_PLEASE_SELECT = 'Please select one 3D tracked null and the 2D layer you wish to stabilize.';
 
-    app.beginUndoGroup("3D Stabilize");
+    app.beginUndoGroup("3D Point Stabilize");
     var comp = app.project.activeItem;
     
     if (comp === undefined) {
