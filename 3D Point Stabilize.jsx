@@ -43,28 +43,33 @@
         // Set up double-point stabilization
     } else {
         // Set up single-point stabilization
-        var scaleNull = comp.layers.addNull();
-        scaleNull.name = "Scale Null";
-        scaleNull.position.expression = "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");" +
-                                        "parent.fromComp(trackNull1.toComp(trackNull1.transform.anchorPoint, 0), 0);";
+
+        pinNull = comp.layers.addNull();
+        pinNull.name = "Pin Null";
+        pinNull.transform.position.expression =
+            "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");\n" +
+            "trackNull1.toComp(trackNull1.transform.anchorPoint);";
+        pinNull.transform.position.setValue(pinNull.transform.position.valueAtTime(0, false));
+        pinNull.transform.position.expression = "";
         
-        scaleNull.scale.expression    = "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");" +
-                                        "cp = thisComp.activeCamera.transform.position;" +
-                                        "cp0 = cp.valueAtTime(0);" +
-                                        "np = trackNull1.transform.position;" +
-                                        "np0 = np.valueAtTime(0);" +
-                                        "d0 = length(cp0 - np0);" +
-                                        "d = length(cp - np);" +
-                                        "s = 100 * d / d0;" +
-                                        "[s,s];";
+        // Set stabilizeLayer expressions
+        stabilizeLayer.transform.anchorPoint.expression =
+            "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");\n" +
+            "trackNull1.toComp(trackNull1.transform.anchorPoint);";
 
-        var stable2D = comp.layers.addNull();
-        stable2D.name = "Stable Null";
+        stabilizeLayer.transform.position.expression =
+            "pinNull2D = thisComp.layer(\"" + pinNull.name + "\");\n" +
+            "pinNull2D.toComp(pinNull2D.transform.anchorPoint);";
 
-        stable2D.position.expression  = "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");" +
-                                        "-trackNull1.toComp(trackNull1.transform.anchorPoint);";
-        scaleNull.parent = stable2D;
-        stabilizeLayer.parent = scaleNull;
-
+        stabilizeLayer.transform.scale.expression =
+            "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");\n" +
+            "cp = thisComp.activeCamera.transform.position;\n" +
+            "cp0 = cp.valueAtTime(0);\n" +
+            "np = trackNull1.transform.position;\n" +
+            "np0 = np.valueAtTime(0);\n" +
+            "d0 = length(cp0 - np0);\n" +
+            "d = length(cp - np);\n" +
+            "s = 100 * d / d0;\n" +
+            "0.01 * s * value;\n";
     }
 })();
