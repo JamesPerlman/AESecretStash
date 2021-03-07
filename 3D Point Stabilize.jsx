@@ -40,7 +40,6 @@
     comp.time = 0;
 
     trackNull1.name = "Track Null 1";
-    trackNull2.name = "Track Null 2";
 
     var pinNull1 = comp.layers.addNull();
     pinNull1.name = "Pin Null 1";
@@ -71,6 +70,7 @@
         "0.01 * s * value;";
 
     if (trackNull2) {
+        trackNull2.name = "Track Null 2";
         // Having two points allows for rotation stabilization
         stabilizeLayer.transform.rotation.expression =
             "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");\n" +

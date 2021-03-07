@@ -103,7 +103,7 @@ function linkTransformExpressions(destLayer, sourceLayer) {
         "cam = comp.activeCamera;\n" +
         "zoom = cam.cameraOption.zoom;\n" +
         "diag = length(0.5 * [comp.width, comp.height]);\n" +
-        "fovD = Math.atan2(zoom, diag);\n" +
+        "fovD = Math.atan2(diag, zoom);\n" +
         "2 * radiansToDegrees(fovD);";
     lightOptions.property("ADBE Casts Shadows").setValue(true);
     lightOptions.property("ADBE Light Cone Feather 2").setValue(0);
