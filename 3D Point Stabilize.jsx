@@ -60,6 +60,8 @@
 
     stabilizeLayer.transform.scale.expression =
         "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");\n" +
+        "pinNull2D = thisComp.layer(\"" + pinNull1.name + "\");\n" +
+        "pinScale = pinNull2D.transform.scale;\n" +
         "cp = thisComp.activeCamera.transform.position;\n" +
         "cp0 = cp.valueAtTime(0);\n" +
         "np = trackNull1.transform.position;\n" +
@@ -67,7 +69,7 @@
         "d0 = length(cp0 - np0);\n" +
         "d = length(cp - np);\n" +
         "s = 100 * d / d0;\n" +
-        "0.01 * s * value;";
+        "0.01 * 0.01 * s * [value[0] * pinScale[0], value[1] * pinScale[1]];";
 
     if (trackNull2) {
         trackNull2.name = "Track Null 2";
