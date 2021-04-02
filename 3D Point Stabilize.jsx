@@ -73,6 +73,7 @@
         trackNull2.name = "Track Null 2";
         // Having two points allows for rotation stabilization
         stabilizeLayer.transform.rotation.expression =
+            "pinNull2D = thisComp.layer(\"" + pinNull1.name + "\");\n" +
             "trackNull1 = thisComp.layer(\"" + trackNull1.name + "\");\n" +
             "trackNull2 = thisComp.layer(\"" + trackNull2.name + "\");\n" +
             "p1 = (t) => trackNull1.toComp(trackNull1.transform.anchorPoint, t);\n" +
@@ -81,6 +82,6 @@
             "a0 = Math.atan2(d0[1], d0[0]);\n" +
             "d = p2(time) - p1(time);\n" +
             "a = Math.atan2(d[1], d[0]);\n" +
-            "value - radiansToDegrees(a - a0);";
+            "value - radiansToDegrees(a - a0) + pinNull2D.transform.rotation;";
     }
 })();
