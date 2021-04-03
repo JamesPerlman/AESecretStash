@@ -85,5 +85,9 @@
             "d = p2(time) - p1(time);\n" +
             "a = Math.atan2(d[1], d[0]);\n" +
             "value - radiansToDegrees(a - a0) + pinNull2D.transform.rotation;";
+    } else {
+        stabilizeLayer.transform.rotation.expression =
+            "pinNull2D = thisComp.layer(\"" + pinNull1.name + "\");\n" +
+            "value + pinNull2D.transform.rotation;";
     }
 })();
